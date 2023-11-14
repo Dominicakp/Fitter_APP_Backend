@@ -13,25 +13,29 @@ To get started with the Fitter App, follow these steps:
 1. **Clone the Repository:**
    ```bash
    git clone <repository_url>
+
 # Navigate to the project directory
 cd fitter-app
 
 # Install dependencies
 pip install -r requirements.txt
+
+
 # Create a virtual environment
 python -m venv <name>
 
 # Activate the virtual environment
-# On Windows: venv\Scripts\activate
-# On macOS/Linux: source venv/bin/activate
+ On Windows: 
+venv\Scripts\activate
+
+On macOS/Linux:
+source venv/bin/activate
+
 # Run the Development Server
 python manage.py runserver
 
 
-
-# USAGE
-# Contributing
-# Create a new branch for your feature or bug fix:
+# To contribute, create a new branch for your feature or bug fix:
 git checkout -b feature_branch_username
 
 # Make your changes, commit, and push to GitHub:
