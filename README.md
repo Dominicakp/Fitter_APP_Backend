@@ -25,7 +25,7 @@ pip install -r requirements.txt
 python -m venv <name>
 
 # Activate the virtual environment
- On Windows: 
+ On Windows : 
 venv\Scripts\activate
 
 On macOS/Linux:
