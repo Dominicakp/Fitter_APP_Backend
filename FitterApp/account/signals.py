@@ -7,10 +7,16 @@ import os
 
 
 def send_otp_email(user):
-    otp_code = random.randint(100000, 999999)  # Generate a random 6-digit OTP code
+    """
+    This sends a randomly generated 6-digit OTP code to the user's email for verification.
+    """
 
+    # Generate a random 6-digit OTP code
+    otp_code = random.randint(100000, 999999)
+
+    # Save the OTP code to the user model's otp field
     user.otp = otp_code
-    user.save()  # The otp code will be saved the user model otp field
+    user.save()  
 
 
     # Send the OTP code via email
@@ -20,8 +26,11 @@ def send_otp_email(user):
     recipient_list = [user.email]
     send_mail(subject, message, from_email, recipient_list)
     
-
+"""
+    Sends an OTP email when a new user is created.
+"""    
 @receiver(post_save, sender=User)
 def send_otp_on_registration(sender, instance, created, **kwargs):
     if created:
-        send_otp_email(instance)  # Send OTP email when a new user is created
+        # Send OTP email when a new user is created
+        send_otp_email(instance)

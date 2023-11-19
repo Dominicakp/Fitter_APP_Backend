@@ -6,6 +6,7 @@ from django.core.validators import MaxLengthValidator, RegexValidator
 import uuid
 
 class User(AbstractUser, PermissionsMixin):
+    """Custom user model with extended fields and permissions."""
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     username = models.CharField(max_length=30, blank=True, null=True, unique=True)
     email = models.EmailField(unique=True)
@@ -21,6 +22,17 @@ class User(AbstractUser, PermissionsMixin):
     USERNAME_FIELD = "username"
     REQUIRED_FIELDS = ["email"]
 
+    """
+    Methods:
+    - save_otp(otp): Save provided OTP to the user instance.
+    - compare_otp(otp): Compare provided OTP with stored OTP for validation.
+    
+
+    Attributes:
+    - otp (IntegerField): User's one-time password for verification.
+    - email (EmailField): User's email address.
+    """
+
     def save_otp(self, otp):
         self.otp = otp
         self.save()
@@ -28,5 +40,6 @@ class User(AbstractUser, PermissionsMixin):
     def compare_otp(self, otp):
         return self.otp == otp
 
+    # - __str__(): Return the user's email as a string.
     def __str__(self):
         return self.email

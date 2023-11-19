@@ -2,7 +2,10 @@ from django.urls import path
 from account.views import *
 
 urlpatterns = [
+    # Endpoint for user registration
     path("register/", RegistrationView.as_view(), name="register"),
+    # Endpoint for OTP verification during user registration
     path('verify-otp/', OTPVerificationView.as_view(), name='otp-verification'),
-     path("login/", LoginView.as_view(), name="login"),
+    # Endpoint for user login
+    path("login/", LoginView.as_view(), name="login"),
 ]
