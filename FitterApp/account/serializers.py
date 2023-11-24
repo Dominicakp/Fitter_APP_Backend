@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from account.models import User
+from account.models import User, CustomerProfile, MechanicProfile
 from django.contrib.auth import get_user_model
 
 User = get_user_model()
@@ -45,3 +45,19 @@ class UserLoginSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = ["username","password"]
+        
+        
+class UpdateUserSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = ('username', 'email','mobile_number','is_verified')
+        
+class UpdateCustomerProfileSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = CustomerProfile
+        fields = ('phone_number', 'address')
+
+class UpdateMechanicProfileSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = MechanicProfile
+        fields = ('experience_years', 'specializations')
