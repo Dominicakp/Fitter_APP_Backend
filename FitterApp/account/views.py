@@ -1,7 +1,7 @@
 import random
 from rest_framework.response import Response
 from account.serializers import *
-from rest_framework import status
+from rest_framework import status, generics
 from rest_framework.views import APIView
 from django.contrib.auth import authenticate
 from account.renderers import UserRenderer
@@ -92,6 +92,31 @@ class OTPVerificationView(APIView):
         user.save()
 
         return Response({"message": f"Registration completed successfully. Welcome {user.username}"}, status=status.HTTP_200_OK)
+    
+
+
+class UpdateUserProfileView(generics.RetrieveUpdateAPIView):
+    """
+    A view that allows users (both customers and mechanics) to view and update their profiles.
+    """
+    permission_classes = [IsAuthenticated]
+
+    def get_serializer_class(self):
+        user = self.request.user
+        if hasattr(user, 'customer_profile'):
+            return UpdateCustomerProfileSerializer
+        elif hasattr(user, 'mechanic_profile'):
+            return UpdateMechanicProfileSerializer
+        return UpdateUserSerializer
+
+    def get_object(self):
+        user = self.request.user
+        if hasattr(user, 'customer_profile'):
+            return user.customer_profile
+        elif hasattr(user, 'mechanic_profile'):
+            return user.mechanic_profile
+        return user
+    
     
 
 class LoginView(APIView):

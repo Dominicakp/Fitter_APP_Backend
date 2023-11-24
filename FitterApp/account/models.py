@@ -16,6 +16,15 @@ class User(AbstractUser, PermissionsMixin):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     otp = models.IntegerField(null=True, blank=True)
+    
+    CUSTOMER = 'customer'
+    MECHANIC = 'mechanic'
+    PROFILE_CHOICES = [
+        (CUSTOMER, 'Customer'),
+        (MECHANIC, 'Mechanic'),
+    ]
+    
+    profile_type = models.CharField(max_length=10, choices=PROFILE_CHOICES, blank=True, null=True)
 
     objects = UserManager()
 
@@ -43,3 +52,15 @@ class User(AbstractUser, PermissionsMixin):
     # - __str__(): Return the user's email as a string.
     def __str__(self):
         return self.email
+    
+class CustomerProfile(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='customer_profile')
+    # customer-specific fields 
+    phone_number = models.CharField(max_length=15, blank=True)
+    address = models.CharField(max_length=255, blank=True)
+
+class MechanicProfile(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='mechanic_profile')
+    # mechanic-specific fields 
+    experience_years = models.PositiveIntegerField(default=0)
+    specializations = models.CharField(max_length=255, blank=True)
