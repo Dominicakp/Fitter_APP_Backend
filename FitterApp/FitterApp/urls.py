@@ -25,6 +25,11 @@ urlpatterns = [
     path('api/v1/', include(router.urls)),
 ]
 
+urlpatterns += [
+    path("api-auth/", include("rest_framework.urls")) #this shows the logout and login feature for testing.
+]
+
+
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
     urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
